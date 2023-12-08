@@ -26,7 +26,7 @@ model:
   train_ds:
     manifest_filepath: ???
     sample_rate: ${model.sample_rate}
-    batch_size: 20 # you may increase batch_size if your memory allows
+    batch_size: 24 # you may increase batch_size if your memory allows
     shuffle: true
     num_workers: 8
     pin_memory: true
@@ -43,7 +43,7 @@ model:
   validation_ds:
     manifest_filepath: ???
     sample_rate: ${model.sample_rate}
-    batch_size: 20
+    batch_size: 24
     shuffle: false
     use_start_end_token: false
     num_workers: 8
@@ -61,6 +61,7 @@ model:
   # You may find more detail on how to train a tokenizer at: /scripts/tokenizers/process_asr_text_tokenizer.py
   # We recommend to use vocab size of 1024 with SPE Unigram for most languages
   tokenizer:
+    update_tokenizer: false
     dir: ???  # path to directory which contains either tokenizer.model (bpe) or vocab.txt (for wpe)
     type: bpe  # Can be either bpe (SentencePiece tokenizer) or wpe (WordPiece tokenizer)
 
@@ -244,7 +245,7 @@ trainer:
   val_check_interval: 1.0 # Set to 0.25 to check 4 times per epoch, or an int for number of iterations
   accelerator: auto
   strategy: ddp
-  accumulate_grad_batches: 1
+  accumulate_grad_batches: 5 # changed from 1
   gradient_clip_val: 1.0
   precision: bf16 # 32 # 16, 32, or bf16 <-- Note: I changed this from 32.
   log_every_n_steps: 10  # Interval of logging.
