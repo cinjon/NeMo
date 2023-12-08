@@ -21,7 +21,7 @@ model:
   train_ds:
     manifest_filepath: ???
     sample_rate: ${model.sample_rate}
-    batch_size: 24 # you may increase batch_size if your memory allows
+    batch_size: 25 # you may increase batch_size if your memory allows
     shuffle: true
     num_workers: 8
     pin_memory: true
@@ -38,7 +38,7 @@ model:
   validation_ds:
     manifest_filepath: ???
     sample_rate: ${model.sample_rate}
-    batch_size: 32
+    batch_size: 25
     shuffle: false
     use_start_end_token: false
     num_workers: 8
@@ -109,7 +109,7 @@ model:
     # An example of settings for multi-lookahead:
     #    att_context_size: [[70,13],[70,6],[70,1],[70,0]]
     #    att_context_probs: [0.25, 0.25, 0.25, 0.25, 0.25]
-    att_context_size: [70, 13] # -1 means unlimited context
+    att_context_size: [[70, 0], [70, 1]] # [70, 13] # -1 means unlimited context
     att_context_style: chunked_limited # regular or chunked_limited
     att_context_probs: null
 
@@ -215,7 +215,7 @@ model:
       name: NoamAnnealing
       d_model: ${model.encoder.d_model}
       # scheduler config override
-      warmup_steps: 2000
+      warmup_steps: 500
       warmup_ratio: null
       min_lr: 1e-6
 
